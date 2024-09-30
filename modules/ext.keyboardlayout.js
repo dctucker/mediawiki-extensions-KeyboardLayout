@@ -14,7 +14,6 @@ var keyboardlayout = {
 		var cw = keyboardlayout.iframe.contentWindow;
 		var scope = keyboardlayout.scope();
 		var value = cw.$serial.serialize(scope.keyboard);
-		delete value[0].preview;
 		return JSON.stringify(value, undefined, "\t");
 	},
 	updateTextarea: () => {
@@ -23,9 +22,25 @@ var keyboardlayout = {
 		keyboardlayout.svgdata.value = scope.getSvg().replace(/(^[ \t]*\n)/gm, "");
 		scope.dirty = false;
 	},
+	consumeTextarea: () => {
+		var scope = keyboardlayout.scope();
+		var cw = keyboardlayout.iframe.contentWindow;
+		var data = cw.$serial.fromJsonL(keyboardlayout.textarea.value);
+		scope.deserializeAndRender(data);
+	},
 };
 
 $(document).ready(e => {
+	// consume edits to the textarea
+	$('#wpTextbox1').on('focus', e => {
+		e.target.previousValue = e.target.value;
+	});
+	$('#wpTextbox1').on('blur', e => {
+		if (e.target.value != e.target.previousValue) {
+			keyboardlayout.consumeTextarea();
+		}
+	});
+
 	// populate textarea right before the form submits
 	$("#wpSave").on("focus", e => {
 		keyboardlayout.updateTextarea();
@@ -33,10 +48,6 @@ $(document).ready(e => {
 	$("#wpPreview").on("focus", e => {
 		keyboardlayout.updateTextarea();
 	});
-	/*
-	$("#editform").on("submit", (e) => {
-	});
-	*/
 	$("#wpSave").on("click", e => {
 		e.preventDefault();
 		var title = mw.config.get('wgPageName').replace(":", "--");
