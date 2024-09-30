@@ -1,0 +1,118 @@
+{
+	"name": "KeyboardLayout",
+	"version": "1.0.0",
+	"author": [
+		"Casey Tucker"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:KeyboardLayout",
+	"descriptionmsg": "keyboardlayout-desc",
+	"license-name": "MIT",
+	"type": "parserhook",
+	"requires": {
+		"MediaWiki": ">= 1.41"
+	},
+	"MessagesDirs": {
+		"KeyboardLayout": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"KeyboardLayoutHooks": "includes/KeyboardLayoutHooks.php",
+		"KeyboardLayoutContentHandler": "includes/KeyboardLayoutContentHandler.php",
+		"KeyboardLayoutContent": "includes/KeyboardLayoutContent.php",
+		"KeyboardLayoutEditAction": "includes/KeyboardLayoutEditAction.php",
+		"KeyboardLayoutEditPage": "includes/KeyboardLayoutEditPage.php"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "modules",
+		"remoteExtPath": "KeyboardContent/modules"
+	},
+	"ResourceModules": {
+		"ext.keyboardlayout": {
+			"scripts": [
+				"ext.keyboardlayout.js"
+			]
+		},
+		"ext.keyboard-layout-editor": {
+			"scripts": [
+				"extensions.js",
+				"render.js",
+				"serial.js",
+				"kb.js"
+			],
+			"dependencies": [
+				"ext.keyboard-layout-editor.styles",
+				"ext.keyboard-layout-editor.scripts"
+			]
+		},
+		"ext.keyboard-layout-editor.styles": {
+			"styles": [
+				"bootstrap.min.css",
+				"font-awesome.min.css",
+				"hint.min.css",
+				"colorpicker.min.css",
+				"kb.css",
+				"kbd-webfont.css"
+			]
+		},
+		"ext.keyboard-layout-editor.scripts": {
+			"scripts": [
+				"ace.js",
+				"angular.min.js",
+				"angular-sanitize.min.js",
+				"angular-cookies.min.js",
+				"ui-ace.min.js",
+				"ui-utils.min.js",
+				"ui-bootstrap-tpls-0.12.0.min.js",
+				"crypto-js.js",
+				"marked.min.js",
+				"FileSaver.min.js",
+				"ng-file-upload.min.js",
+				"draganddrop.js",
+				"bootstrap-colorpicker-module.min.js",
+				"doT.min.js",
+				"urlon.js",
+				"cssparser.min.js",
+				"color.js",
+				"jsonl.min.js",
+				"html2canvas.min.js"
+			]
+		}
+	},
+	"Hooks": {
+		"BeforePageDisplay": "KeyboardayoutHooks::onBeforePageDisplay",
+		"ParserFirstCallInit": "KeyboardLayoutHooks::onParserFirstCallInit",
+		"ResourceLoaderRegisterModules": "KeyboardLayoutHooks::onResourceLoaderRegisterModules",
+		"CodeEditorGetPageLanguage": "KeyboardLayoutHooks::onCodeEditorGetPageLanguage",
+		"EditPage::importFormData":  "KeyboardLayoutHooks::onEditPage__importFormData",
+		"BeforeParserFetchTemplateAndtitle": "KeyboardLayoutContent::onBeforeParserFetchTemplateAndtitle",
+		"BeforeParserFetchTemplateRevisionRecord": "KeyboardLayoutContent::onBeforeParserFetchTemplateAndtitle"
+	},
+	"callback": "KeyboardLayoutHooks::onRegistration",
+	"config": {},
+	"ContentHandlers": {
+		"keyboardlayout": "KeyboardLayoutContentHandler"
+	},
+	"TrackingCategories": [
+		"keyboardlayout-error-category"
+	],
+	"namespaces": [
+		{
+			"id": 770,
+			"constant": "NS_KEYBOARD",
+			"name": "Keyboard",
+			"subpages": true,
+			"content": true,
+			"defaultcontentmodel": "keyboardlayout"
+		},
+		{
+			"id": 771,
+			"constant": "NS_KEYBOARD_TALK",
+			"name": "Keyboard_talk",
+			"subpages": true,
+			"content": false,
+			"defaultcontentmodel": "wikitext"
+		}
+	],
+	"manifest_version": 2
+}

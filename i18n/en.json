@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Casey Tucker"
+		]
+	},
+	"keyboardlayout-desc": "Provides preview and editing of keyboard layouts",
+	"keyboardlayout-error-category": "Pages with keyboard layout errors",
+	"keyboardlayout-error-category-desc": "There was an error when attempting to parse JSON included on the page.",
+	"keyboardlayout-error-parse-failure": "Failed to parse JSON"
+}
